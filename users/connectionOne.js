@@ -1,3 +1,7 @@
+// I was having some problems with creating multiple collections
+// and I solve that in this way
+
+
 var mongoose = require('mongoose'),
     mongoURI = 'mongodb://localhost/users';
 
