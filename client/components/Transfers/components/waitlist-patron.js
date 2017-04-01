@@ -15,6 +15,9 @@ class WaitListPatron extends Component {
 			);
 	}
 
+	//need to add function to handle Notify. Should use cell number of patron to text that their table is ready.
+	//Twilio script is currently in userController.
+
 	/*renderAction() {
 		return ( 
 			<div>

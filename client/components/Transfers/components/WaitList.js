@@ -29,6 +29,8 @@ class WaitList extends Component {
 		};
 	}
 
+	//add getInitialState of list of customers signed up from database.
+
 	render() {
 		return ( 
 			<div className = "container">
@@ -40,24 +42,39 @@ class WaitList extends Component {
 	}
 
 	addToList(patron, cell) {
+		console.log('this the patron', patron);
 		this.state.waitlist.push({
 			patron,
 			cell
 		});
 		this.setState({ waitlist: this.state.waitlist });
 
-		fetch({
-			method: 'post',
-			url: 'http://localhost:3000/users',
-			body: {
-				name: patron,
-				cell: cell
-    		}
-		}).then(res => {
-      		console.log(res);
-		}).catch((err) => {
-			console.log('testing', err);
-		})
+		const newRequest = new XMLHttpRequest();
+		newRequest.open('Post',  'http://localhost:3000/users');
+		newRequest.onload = function(){
+			console.log(newRequest.responseText);
+			// console.log(JSON.parse(newRequest.responseText));
+		}
+		newRequest.send(JSON.stringify({name: patron,
+											cell: cell}));
+
+		console.log('newRequest', newRequest);
+		// fetch('/users',{
+		// 	method: 'Post',
+		// 	headers: new Headers({
+		// 		'Content-Type': 'application/JSON'
+		// 	}),
+		// 	body: JSON.stringify({
+		// 		name: patron,
+		// 		cell: cell
+    	// 	})
+		// }).then(res => {
+		// 	  return res.json();
+		// }).then((data) => {
+		// 	console.log(data);	
+		// }).catch((err) => {
+		// 	console.log('testing', err);
+		// })
 	}
 
 	deletePatron(patronToDelete) {

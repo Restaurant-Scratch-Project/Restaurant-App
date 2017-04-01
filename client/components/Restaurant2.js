@@ -9,7 +9,7 @@ class Restaurant2 extends React.Component{
         return(
         <div>
         <form onSubmit=''>
-            <button><a href="#guestWait">Restaurnat 2</a></button>
+            <button><a href="#guestWait">Restaurant 2</a></button>
         </form>
         </div>
         )
