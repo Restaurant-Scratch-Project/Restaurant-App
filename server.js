@@ -8,11 +8,14 @@ const restController = require('./restaurants/restController');
 const autoIncrement = require('mongoose-auto-increment');
 const Users = require('./users/userModel');
 const cors = require('cors');
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
+const path = require('path');
+
+app.use(express.static(path.join(__dirname, './')));
+// app.use(function(req, res, next) {
+//   res.header("Access-Control-Allow-Origin", "*");
+//   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+//   next();
+// });
 // const Restaurants = require('./restaurants/restaurantModel');
 
 
@@ -20,6 +23,17 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser());
 
+// app.get('/', (req, res) => {
+//   res.sendFile(__dirname + '/index.html');
+// });
+//
+// app.get('/styles.css', (req, res) => {
+//   res.sendFile(__dirname + '/styles.css');
+// });
+//
+// app.get('/build/webpack-bundle.js', (req, res) => {
+//   res.sendFile(__dirname + '/build/webpack-bundle.js');
+// });
 // route for wait time check page when user want to check that from home
 app.get('/wait-time-check', usersController.time,  (req, res) => {
   res.status(200).send();
@@ -36,7 +50,7 @@ app.post('/users', usersController.createUser, (req, res) => {
 // if user enter correct username and password it will go on usersList
 // if it's not go to 401 indicating that the request requires authentication
 app.get('/usersList', (req,res) => {
-  if (req.cookies.username) {
+  // if (req.cookies.username) {
 
     Users.find({}, function(err, users) {
 
@@ -46,9 +60,9 @@ app.get('/usersList', (req,res) => {
 
       res.send(userMap);
     });
-  } else {
-    res.status(401).send();
-  }
+  // } else {
+  //   res.status(401).send();
+  // }
 
 });
 

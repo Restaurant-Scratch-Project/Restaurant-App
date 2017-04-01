@@ -22,16 +22,18 @@ usersController.createUser = (req, res, next) => {
 							if (error) console.log('error:', error);
 							else {
 
+                //Twilio script
                 client.messages
                   .create({
                     to: req.body.cell,
-                    from: '+18033849413',
-                    body: 'Hey',
+                    from: '+18033849413', //This is a number we got from Twilio.
+                    body: 'Your table is ready!',
                   })
                   .then((message) => console.log(message.sid));
 
                 return next();
               }
+              
 				});
 };
 

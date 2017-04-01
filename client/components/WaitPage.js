@@ -9,7 +9,9 @@ class WaitPage extends React.Component{
     render(){
         return(
             <div>
-               Currente customer wait is
+               Current customer wait time is
+
+               <h1>20 minutes</h1>
                
             </div>
         );

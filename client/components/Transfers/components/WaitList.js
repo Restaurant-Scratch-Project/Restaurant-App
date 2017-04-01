@@ -29,6 +29,8 @@ class WaitList extends Component {
 		};
 	}
 
+	//add getInitialState of list of customers signed up from database.
+
 	render() {
 		return ( 
 			<div className = "container">
@@ -47,14 +49,16 @@ class WaitList extends Component {
 		});
 		this.setState({ waitlist: this.state.waitlist });
 
-		const newRequest = new XMLHttpRequest;
-		newRequest.open('Post',  '/users');
+		const newRequest = new XMLHttpRequest();
+		newRequest.open('Post',  'http://localhost:3000/users');
 		newRequest.onload = function(){
 			console.log(newRequest.responseText);
 			// console.log(JSON.parse(newRequest.responseText));
 		}
 		newRequest.send(JSON.stringify({name: patron,
 											cell: cell}));
+
+		console.log('newRequest', newRequest);
 		// fetch('/users',{
 		// 	method: 'Post',
 		// 	headers: new Headers({
