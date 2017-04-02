@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import AddName from './add-list';
 import ListOfNames from './list-of-names';
 import _ from 'lodash';
-import Axios from 'axios';
+// import Axios from 'axios';
 
 const waitlist = [
 	{
@@ -17,7 +17,7 @@ const waitlist = [
 
 const config = {
 	headers: {
-		'Content-Type': 'application/x-www-form-urlencoded'
+		'Content-Type': 'application/json'
 	}
 }
 class WaitList extends Component {
@@ -51,44 +51,30 @@ class WaitList extends Component {
 
 		const newRequest = new XMLHttpRequest();
 		newRequest.open('Post',  'http://localhost:3000/users');
+		newRequest.setRequestHeader('Content-Type', 'application/json');
 		newRequest.onload = function(){
-			console.log(newRequest.responseText);
-			// console.log(JSON.parse(newRequest.responseText));
+			if (newRequest.readyState == 4 && newRequest.status == 200) {
+				console.log(newRequest.responseText);
+        	}
 		}
-		newRequest.send(JSON.stringify({name: patron,
-											cell: cell}));
-
-		console.log('newRequest', newRequest);
-		// fetch('/users',{
-		// 	method: 'Post',
-		// 	headers: new Headers({
-		// 		'Content-Type': 'application/JSON'
-		// 	}),
-		// 	body: JSON.stringify({
-		// 		name: patron,
-		// 		cell: cell
-    	// 	})
-		// }).then(res => {
-		// 	  return res.json();
-		// }).then((data) => {
-		// 	console.log(data);	
-		// }).catch((err) => {
-		// 	console.log('testing', err);
-		// })
+		newRequest.send(JSON.stringify({name: patron, cell: cell}));
 	}
 
 	deletePatron(patronToDelete) {
 		_.remove(this.state.waitlist, waitlist => waitlist.patron === patronToDelete);
         this.setState({ waitlist: this.state.waitlist });
 
-	// 	Axios.get('/removeOne', {
-  //     name: this.state.waitlist.patron,
-  //     cell: this.state.waitlist.cell
-  //   }).then(res => {
-  //     console.log(res);
-  //   })
+		const newRequest = new XMLHttpRequest();
+		newRequest.open('Post',  'http://localhost:3000/removeOne');
+		newRequest.setRequestHeader('Content-Type', 'application/json');
+		newRequest.onload = function(){
+			if (newRequest.readyState == 4 && newRequest.status == 200) {
+				console.log(newRequest.responseText);
+        	}
+		}
+		newRequest.send(JSON.stringify({name: patron, cell: cell}));
 
-	 }
+	 	}
 }
 
 export default WaitList;
