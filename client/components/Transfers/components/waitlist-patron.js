@@ -6,12 +6,12 @@ class WaitListPatron extends Component {
 		const { patron, cell } = this.props;
 
 			return (
-				<tr>
-				<td> { patron } </td>
-				<td> { cell } </td>
-				<button onClick = {this.props.deletePatron.bind(this, this.props.patron)}> Delete </button>
-				<button onClick = ""> Notify </button>  
-				</tr>
+						<tr>
+							<td> { patron } </td>
+							<td> { cell } </td>
+							<td> <button onClick = {this.props.deletePatron.bind(this, this.props.patron)}> Delete </button> </td>
+							<td> <button onClick = ""> Notify </button> </td>
+						</tr>
 			);
 	}
 
