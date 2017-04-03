@@ -1,6 +1,5 @@
 const Users = require('./userModel');
 const mongoose = require('mongoose');
-const autoIncrement = require('mongoose-auto-increment');
 const usersController = {};
 
 // Twilio Credentials
@@ -15,21 +14,22 @@ const client = require('twilio')(accountSid, authToken);
 usersController.createUser = (req, res, next) => {
   console.log('========',req.body);
 	Users.create({
-				name: req.body.name,
-				cell: req.body.cell
+				username: req.body.username,
+				phoneNumber: req.body.phoneNumber,
+        favoritesList: req.body.favoritesList,
 				}, (error, doc) => {
               // console.log('8767678678');
 							if (error) console.log('error:', error);
 							else {
-
+                console.log('POSTED')
                 //Twilio script
-                client.messages
-                  .create({
-                    to: req.body.cell,
-                    from: '+18033849413', //This is a number we got from Twilio.
-                    body: 'Your table is ready!',
-                  })
-                  .then((message) => console.log(message.sid));
+                // client.messages
+                //   .create({
+                //     to: req.body.cell,
+                //     from: '+18033849413', //This is a number we got from Twilio.
+                //     body: 'Your table is ready!',
+                //   })
+                //   .then((message) => console.log(message.sid));
 
                 return next();
               }

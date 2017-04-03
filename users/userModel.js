@@ -1,16 +1,20 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const autoIncrement = require('mongoose-auto-increment');
-const connectionOne = require('./connectionOne');
 
 
 // const users = 'mongodb://localhost/users';
 // mongoose.connect(users);
 
+const favoritesSchema = new Schema ({
+  restaurant: String,
+  phoneNumber: Number,
+});
+
 const usersSchema = new Schema({
-  name: String,
-  cell: Number
+  username: {type: String, required: true, unique: true},
+  phoneNumber: Number,
+  favoritesList: [favoritesSchema],
 });
 
 
-module.exports = connectionOne.model('Users', usersSchema);
+module.exports = mongoose.model('Users', usersSchema);

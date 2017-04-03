@@ -9,9 +9,12 @@ restController.createRest = (req, res, next) => {
 	Restaurants.create({
 				username: req.body.username,
 				password: req.body.password,
+				restaurantInfo: req.body.restaurantProfile,
+				waitTime: req.body.waitTime,
 				}, (error, doc) => {
 							if (error) console.log('error:', error);
 							else {
+								console.log('POSTED RESTAURANT INFO')
                 return next();
               }
 				});

@@ -5,10 +5,15 @@ const cookieParser = require('cookie-parser')
 const mongoose = require('mongoose');
 const usersController = require('./users/usersController');
 const restController = require('./restaurants/restController');
-const autoIncrement = require('mongoose-auto-increment');
 const Users = require('./users/userModel');
+const Restaurants = require('./restaurants/restaurantModel');
 const cors = require('cors');
 const path = require('path');
+
+mongoose.connect('mongodb://codesmith13:1Lovetesting@ds149800.mlab.com:49800/codesmith13');
+mongoose.connection.once('open', () => {
+  console.log('Connected to Database');
+});
 
 app.use(express.static(path.join(__dirname, './')));
 // app.use(function(req, res, next) {
@@ -53,17 +58,23 @@ app.get('/usersList', (req,res) => {
   // if (req.cookies.username) {
 
     Users.find({}, function(err, users) {
-
-      var userMap = users.map((user) => {
-        return {name: user.name, cell: user.cell};
+      console.log(users);
+      let userArr = users.map((user) => {
+        return {username: user.username, phoneNumber: user.phoneNumber};
       });
-
-      res.send(userMap);
+      res.send(userArr);
     });
   // } else {
   //   res.status(401).send();
   // }
 
+});
+
+app.get('/restaurantsList', (req, res) => {
+  Restaurants.find({}, (err, restaurants) => {
+    if (err) return res.status(400).json("Request was terrible");
+    res.status(200).json(restaurants);
+  })
 });
 
 // login for restaurants
