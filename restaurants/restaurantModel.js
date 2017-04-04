@@ -5,18 +5,21 @@ const Schema = mongoose.Schema;
 mongoose.Promise = global.Promise;
 // mongoose.createConnection(restaurants);
 
-const restaurantProfile = new Schema ({
+const profile = new Schema ({
   name: String,
   phoneNumber: Number,
   address: String,
 })
 
-const restaurantsSchema = new Schema({
-  username: String,
-  password: String,
-  restaurantInfo: [restaurantProfile],
+const restaurantSchema = new Schema({
+  username: {type: String, required: true, unique: true},
+  password: {type: String, required: true},
+  name: String,
+  phoneNumber: String,
+  address: String,
+  image: String,
   waitTime: Number,
 });
 
 
-module.exports = mongoose.model('Restaurants', restaurantsSchema);
+module.exports = mongoose.model('Restaurant', restaurantSchema);
