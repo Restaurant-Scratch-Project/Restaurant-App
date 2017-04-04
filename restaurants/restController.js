@@ -1,40 +1,34 @@
-const Restaurants = require('./restaurantModel');
+const Restaurant = require('./restaurantModel');
 const mongoose = require('mongoose');
-const autoIncrement = require('mongoose-auto-increment');
 const restController = {};
 
-// creating restorant account
 restController.createRest = (req, res, next) => {
-  // console.log('REST------',req.body);
-	Restaurants.create({
-				username: req.body.username,
-				password: req.body.password,
-				}, (error, doc) => {
-							if (error) console.log('error:', error);
-							else {
-                return next();
-              }
-				});
+	Restaurant.create({
+		username: req.body.username,
+		password: req.body.password,
+		name: req.body.name,
+		phoneNumber: req.body.phoneNumber,
+		address: req.body.address,
+		image: req.body.image,
+		waitTime: req.body.waitTime,
+	}, (error, restaurant) => {
+		if (error) {
+			return res.status(400).json('Error');
+		} else {
+			return res.status(200).json(restaurant);
+		}
+	});
 };
 
-// login
-restController.login = (req, res, next) => {
-	Restaurants.find({
-				username: req.body.username,
-				password: req.body.password,
-				}, (error, doc) => {
-
-							if (error) console.log('error:', error);
-							else {
-                if (doc.length > 0) {
-                  res.cookie('username', req.body.username).send();
-                } else {
-                  res.status(204).send();
-                }
-
-                return next();
-              }
-				});
+restController.findAll = (req, res, next) => {
+	Restaurant.find({}, (err, restaurants) => {
+		if (err) {
+			console.log(err);
+			return res.status(400).json("Request was terrible");
+		} else {
+			res.status(200).json(restaurants);
+		}
+	});
 };
 
 module.exports = restController;
